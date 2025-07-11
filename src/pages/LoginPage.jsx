@@ -63,14 +63,14 @@ const LoginPage = () => {
 		>
 			<div className='p-8'>
 				<h2 className='text-3xl font-bold mb-6 text-center text-green-400/80'>
-					Welcome Back
+					欢迎回来
 				</h2>
 
 				<form onSubmit={handleLogin}>
 					<Input
 						icon={Mail}
 						type='email'
-						placeholder='Email Address'
+						placeholder='邮箱地址'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
@@ -78,14 +78,14 @@ const LoginPage = () => {
 					<Input
 						icon={Lock}
 						type='password'
-						placeholder='Password'
+						placeholder='密码'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 
 					<div className='flex items-center mb-6'>
 						<Link to='/forgot-password' className='text-sm text-green-500 hover:underline'>
-							Forgot password?
+							忘记密码?
 						</Link>
 					</div>
 					{error && <p className='text-red-500 font-semibold mb-2'>{error}</p>}
@@ -97,15 +97,15 @@ const LoginPage = () => {
 						type='submit'
 						disabled={isLoading}
 					>
-						{isLoading ? <Loader className='w-6 h-6 animate-spin mx-auto' /> : "Login"}
+						{isLoading ? <Loader className='w-6 h-6 animate-spin mx-auto' /> : "登录"}
 					</motion.button>
 				</form>
 			</div>
 			<div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
 				<p className='text-sm text-gray-400'>
-					Don't have an account?{" "}
+					还没有注册账号？{" "}
 					<Link to='/signup' className='text-green-500 hover:underline'>
-						Sign up
+						注册
 					</Link>
 				</p>
 			</div>

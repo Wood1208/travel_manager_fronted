@@ -21,8 +21,8 @@ const SignUpPage = () => {
 
     try {
       await signup(email, password, name);
-      navigate("/login");
       toast.success("成功注册！");
+      navigate("/login");
     } catch(error) {
       console.log(error);
       toast.error("注册失败，请稍后再试！");
@@ -64,28 +64,28 @@ const SignUpPage = () => {
         {/*  bg-gradient-to-r from-green-400 to-emerald-500
         text-transparent bg-clip-text 这里解决不了这个样式问题 */}
         <h2 className='text-3xl font-bold mb-6 text-center text-green-400/80'>
-          Create Account
+          创建账户
         </h2>
 
         <form onSubmit={handleSignUp}>
           <Input
             icon={User}
             type='text'
-            placeholder='User Name'
+            placeholder='用户名'
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <Input
             icon={Mail}
             type='email'
-            placeholder='Email Address'
+            placeholder='邮箱地址'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             icon={Lock}
             type='password'
-            placeholder='Password'
+            placeholder='密码'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -101,15 +101,15 @@ const SignUpPage = () => {
             type='submit'
             disabled={isLoading}
           >
-            {isLoading ? <Loader className='animate-spin mx-auto' size={24} /> : "Sign Up"}
+            {isLoading ? <Loader className='animate-spin mx-auto' size={24} /> : "注册"}
           </motion.button>
         </form>
       </div>
       <div className='px-8 py-4 bg-gray-900/50 flex justify-center'>
         <p className='text-sm text-gray-400'>
-          Already have an account?{" "}
+          已经完成注册？{" "}
           <Link to={'/login'} className='text-green-400 hover:underline'>
-            Login
+            登录
           </Link>
         </p>
       </div>

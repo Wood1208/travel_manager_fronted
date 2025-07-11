@@ -44,7 +44,7 @@ const UserReservationsPage = () => {
       // 检查响应的状态码
       if (response.status === 200) {
         // 如果成功，更新页面记录
-        setReservations(prevReservations => prevReservations.filter(reservation => reservation.attractionId !== attractionId));
+        setReservations(prevReservations => prevReservations.filter(reservation => reservation.reservationDate !== date));
         toast.success("取消预约成功~");
       } else {
         toast.error("取消预约失败，请稍后再试！");

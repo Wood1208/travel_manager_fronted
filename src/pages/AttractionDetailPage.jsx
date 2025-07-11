@@ -8,7 +8,6 @@ import { Box, Button, Typography, Chip, Card } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import { Phone } from 'lucide-react';
 
 import { Navbar } from '../components/ui/navbar';
 import { Footer } from '../components/ui/footer';
@@ -23,6 +22,7 @@ const AttractionDetailPage = () => {
   const [isFavorited, setIsFavorited] = useState(false); //是否收藏
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const currentDate = new Date().toISOString().split('T')[0];
 
   const token = localStorage.getItem('authToken');
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
@@ -266,24 +266,34 @@ const AttractionDetailPage = () => {
 
             {/* 显示预约数据 */}
             <div className='mt-3 flex flex-col'>
-              <h6 className='text-black/80 font-semibold text-xl mb-2'>目前开放门票情况：每个用户每个日期只能预约一次，否则自动拦截！</h6>
+              <h6 className='text-black/80 font-semibold text-xl mb-2'>
+                目前开放门票情况：每个用户每个日期只能预约一次，否则自动拦截！
+              </h6>
               {Array.isArray(tickets) && tickets.length > 0 ? (
                 tickets.map((ticket, index) => {
                   // 格式化日期为 YYYY-MM-DD 格式
                   const formattedDate = new Date(ticket.date).toISOString().split('T')[0];
-                  
+
+                  // 禁用按钮的条件：门票已售罄、正在提交、日期已过
+                  const isDisabled =
+                    ticket.remainingTickets <= 0 ||
+                    isSubmitting === true ||
+                    formattedDate < currentDate;
+
                   return (
                     <div className='mt-2 ' key={index}>
-                    预约日期: {formattedDate}, 可预约门票: {ticket.remainingTickets}, 人流量: {ticket.currentFlow}
-                    <button
-                      onClick={() => handleReservation(formattedDate)} 
-                      className='ml-4 text-black/80 font-semibold border-2 rounded-2xl 
-                      border-blue-400 bg-blue-300 hover:bg-blue-100 cursor-pointer'
-                      disabled={ticket.remainingTickets <= 0 || isSubmitting == true}
-                    >
-                      预约
-                    </button>
-                  </div>
+                      预约日期: {formattedDate}, 可预约门票: {ticket.remainingTickets}, 人流量: {ticket.currentFlow}
+                      <button
+                        onClick={() => handleReservation(formattedDate)} 
+                        className={`ml-4 text-black/80 font-semibold border-2 rounded-2xl 
+                        border-blue-400 bg-blue-300 hover:bg-blue-100 cursor-pointer ${
+                          isDisabled ? 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed' : ''
+                        }`} // 禁用时添加灰色背景和禁用样式
+                        disabled={isDisabled}
+                      >
+                        {isDisabled ? '过期' : '预约'}
+                      </button>
+                    </div>
                   );
                 })
               ) : (

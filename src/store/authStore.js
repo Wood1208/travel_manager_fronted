@@ -16,7 +16,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.post(`${API_URL}/auth/sign-up`, {username, email, password});
-      set({ user: response.data.user, isAuthenticated: true, isLoading: false });
+      set({ user: response.data, isAuthenticated: true, isLoading: false });
     } catch(error) {
       set({ error: error.response.data.message || "Error signing up", isLoading: false });
       throw error;

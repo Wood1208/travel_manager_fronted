@@ -7,6 +7,7 @@ import { ImagesSlider } from "../../src/components/ui/image-slider";
 import { CardBody, CardContainer, CardItem } from "../../src/components/ui/3d-card";
 import { Footer } from "../components/ui/footer";
 import { Navbar } from "../components/ui/navbar";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const DashboardPage = () => {
 	// 这里是展示大图的url
@@ -17,6 +18,7 @@ const DashboardPage = () => {
   ];
 
 	const [attractions, setAttractions] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	// 处理进入详细页面
 	const navigate = useNavigate();
   const handleGoClick = (id) => {
@@ -54,6 +56,7 @@ const DashboardPage = () => {
 		axios.get('http://localhost:5000/attraction/getAttractionList')
 			.then(response => {
 				setAttractions(response.data);
+				setIsLoading(false);
 			})
 			.catch(error => {
 				console.log('Error fetching attractions:', error);
@@ -68,11 +71,14 @@ const DashboardPage = () => {
 		id: attraction.id
 	}));
 
+	if(isLoading) {
+		return <div><LoadingSpinner /></div>
+	}
+
   return (
     <div className="relative w-full h-screen">
-
+			
 			<Navbar />
-
       {/* Image Slider */}
       <div className="w-full h-full">
         <ImagesSlider className="w-full h-full object-cover" images={images} />
@@ -133,7 +139,7 @@ const DashboardPage = () => {
 								translateZ={20}
 								as="button"
 								onClick={() => handleGoClick(card.id)} // 在点击按钮时进行路由跳转
-								className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
+								className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold cursor-pointer"
 							>
 								GO
 							</CardItem>

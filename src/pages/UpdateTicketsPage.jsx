@@ -21,6 +21,7 @@ const UpdateTicketsPage = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const currentDate = new Date().toISOString().split('T')[0];
   
   // 获取景点门票数据
   useEffect(() => {
@@ -152,7 +153,15 @@ const UpdateTicketsPage = () => {
               <div className="flex space-x-6">
                 <div>
                   <p className="text-gray-200 text-xl font-semibold mb-1">选择日期：</p>
-                  <Input icon={Calendar} type="date" name="date" value={formData.date} onChange={handleChange} placeholder="选择日期" />
+                  <Input 
+                    icon={Calendar} 
+                    type="date" 
+                    name="date" 
+                    value={formData.date} 
+                    onChange={handleChange} 
+                    placeholder="选择日期" 
+                    min={currentDate} // 设置最小日期为当前日期  
+                  />
                 </div>
                 <div>
                   <p className="text-gray-200 text-xl font-semibold mb-1">填写票数：</p>
@@ -188,7 +197,7 @@ const UpdateTicketsPage = () => {
                       type="number" 
                       value={newTicketsMap[ticket.id]} 
                       onChange={(e) => handleTicketCountChange(ticket.id, Number(e.target.value))} 
-                      placeholder="添加票数" 
+                      placeholder="修改为票数" 
                     />
                   </div>
                   <button 

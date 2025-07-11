@@ -7,6 +7,7 @@ import { Input } from '../components/Input';
 import { House, Image, Book, Text, Tag } from "lucide-react";
 import { Navbar } from '../components/ui/navbar';
 import { FloatingShape } from '../components/FloatingShape';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAttractionPage = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const CreateAttractionPage = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // 表单字段变化时更新状态
   const handleChange = (e) => {
@@ -57,6 +59,7 @@ const CreateAttractionPage = () => {
         toast.error('网络错误，请稍后再试');
       } finally {
         setIsSubmitting(false);
+        navigate('/admin');
       }
     }
   }

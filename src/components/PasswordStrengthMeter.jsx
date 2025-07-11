@@ -59,7 +59,7 @@ export const PasswordStrengthMeter = ({ password }) => {
     <div className="mt-2">
       <div className="flex justify-between items-center mb-1">
         <span className="text-xs text-gray-400">
-          Password strength
+          密码强度
         </span>
         <span className="text-xs text-gray-400">
           {getStrengthText(strength)}
